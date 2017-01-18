@@ -1,5 +1,6 @@
 package uk.co.jimreader.vl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,33 +16,41 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @EnableBinding(BillingChannels.class)
 @RestController
 public class VehicleLookup {
 
 	@Autowired
-    private DiscoveryClient discoveryClient;
+	private DiscoveryClient discoveryClient;
 
 	private final MessageChannel channel;
-	
-	public VehicleLookup(BillingChannels channels) {
+
+	private final ObjectMapper mapper;
+
+	public VehicleLookup(BillingChannels channels, ObjectMapper mapper) {
+		this.mapper = mapper;
 		this.channel = channels.billing();
 	}
-	
-    @RequestMapping("/service-instances/{applicationName}")
-    public List<ServiceInstance> serviceInstancesByApplicationName(
-            @PathVariable String applicationName) {
-        return this.discoveryClient.getInstances(applicationName);
-    }
-    
-    @GetMapping("/vehicle/{vrn}")
-    public Vehicle getVehicle(@PathVariable("vrn") String vrn) {
-    	Message<String> msg = MessageBuilder.withPayload("Billing for VRN " + vrn).build();
-    	this.channel.send(msg);
-    	
-    	return Vehicle.builder().make("Ford").model("Escort").registration(vrn).build();
-    	
-    }
+
+	@RequestMapping("/service-instances/{applicationName}")
+	public List<ServiceInstance> serviceInstancesByApplicationName(@PathVariable String applicationName) {
+		return this.discoveryClient.getInstances(applicationName);
+	}
+
+	@GetMapping("/vehicle/{vrn}")
+	public Vehicle getVehicle(@PathVariable("vrn") String vrn) throws JsonProcessingException {
+		Message<String> msg = MessageBuilder
+				.withPayload(mapper.writeValueAsString(
+						VehicleLookupBillingRecord.builder().date(new Date().toString()).vrn(vrn).user("test").build()))
+				.build();
+		this.channel.send(msg);
+
+		return Vehicle.builder().make("Ford").model("Escort").registration(vrn).build();
+
+	}
 }
 
 interface BillingChannels {
@@ -49,4 +58,3 @@ interface BillingChannels {
 	@Output
 	MessageChannel billing();
 }
-

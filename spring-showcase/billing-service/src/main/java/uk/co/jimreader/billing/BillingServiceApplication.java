@@ -24,7 +24,7 @@ public class BillingServiceApplication {
 	@Bean
 	@Scope("prototype")
 	Logger logger (InjectionPoint ip) {
-		return Logger.getLogger(ip.getDeclaredType().getName());
+		return Logger.getLogger(ip.getMember().getDeclaringClass().getName());
 	}
 	
 	@Bean
