@@ -1,7 +1,11 @@
+server:
+  port: 0
+  
 spring:
   cloud:
     stream:
       bindings:
         billing:
           destination: billing
+          group: billing-group
         
