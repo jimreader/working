@@ -12,6 +12,9 @@
 hs_err_pid*
 .metadata
 .settings
+.mvn
 .classpath
 .project
 .DS_Store
+.recommenders
+RemoteSystemsTempFiles
