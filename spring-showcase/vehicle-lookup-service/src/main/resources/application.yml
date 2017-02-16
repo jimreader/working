@@ -10,3 +10,7 @@ spring:
       bindings:
         billing:
           destination: billing
+          
+dataservice:
+  url: http://dvlasearch.appspot.com/DvlaSearch?
+  apikey: DvlaSearchDemoAccount
