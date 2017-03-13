@@ -82,6 +82,5 @@ function sendMessage() {
 }
 
 function scrollDown() {
-	var focusBottom = document.getElementById("#messages");
-	focusBottom.scrollTop = focusBottom.scrollHeight;
+	$("#messages").animate({ scrollTop: $("#messages")[0].scrollHeight}, 1000);
 }
