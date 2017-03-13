@@ -22,10 +22,10 @@ public class GreetingController {
     public void greeting(HelloMessage message) throws Exception {
     	
     	final Context ctx = new Context();
-    	ctx.setVariable("message", message);
+    	ctx.setVariable("message", message.getName());
     	
-    	final String htmlContent = this.templateEngine.process("templates/sent.xml", ctx);
-        rabbitTemplate.convertAndSend("sms-queue", message.getName());
+    	String htmlContent = this.templateEngine.process("templates/sent.xml", ctx);
+        rabbitTemplate.convertAndSend("sms-queue", htmlContent);
     }
 
 }

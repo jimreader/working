@@ -10,19 +10,20 @@
 </head>
 <body>
 
-	<audio id="alert">
+	<audio id="alertMedia">
 		<source src="/alert.mp3" type="audio/mpeg">
-		Your browser does not support the audio element.
 	</audio>
 
-	<header>
-		<h2 id="originator">iMessage</h2>
-	</header>
-	<div id="messages-wrapper" class="messages-wrapper"></div>
-	<header>
-		<input type="text" id="name" class="form-control"
-			placeholder="Your name here...">
-		<button id="send" class="btn btn-default" type="submit">Send</button>
-	</header>
+	<div class="iphone">
+  <div class="border">
+    <form class="chat">
+      <span></span>
+      <div class="messages" id="messages">
+      </div>
+      <input id="newmessage" type="text" placeholder="Your message">
+      <input id="send" type="button" value="Send">
+    </form>
+  </div>
+</div>
 </body>
 </html>
