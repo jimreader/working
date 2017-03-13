@@ -13,9 +13,10 @@ public class GreetingController {
     
 	private TemplateEngine templateEngine;
 	
-	public GreetingController(RabbitTemplate rabbitTemplate) {
+	public GreetingController(RabbitTemplate rabbitTemplate, TemplateEngine templateEngine) {
 		super();
 		this.rabbitTemplate = rabbitTemplate;
+		this.templateEngine = templateEngine;
 	}
 
     @MessageMapping("/hello")
@@ -24,8 +25,9 @@ public class GreetingController {
     	final Context ctx = new Context();
     	ctx.setVariable("message", message.getName());
     	
-    	String htmlContent = this.templateEngine.process("templates/sent.xml", ctx);
-        rabbitTemplate.convertAndSend("sms-queue", htmlContent);
+    	//String htmlContent = this.templateEngine.process("/templates/sent.xml", ctx);
+    	//System.out.println(htmlContent);
+        rabbitTemplate.convertAndSend("sms-queue", message.getName());
     }
 
 }
