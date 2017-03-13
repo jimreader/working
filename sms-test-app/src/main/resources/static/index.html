@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello WebSocket</title>
+<link href="/main.css" rel="stylesheet">
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/sockjs-client/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/stomp.min.js"></script>
+<script src="/app.js"></script>
+</head>
+<body>
+
+	<audio id="alert">
+		<source src="/alert.mp3" type="audio/mpeg">
+		Your browser does not support the audio element.
+	</audio>
+
+	<header>
+		<h2 id="originator">iMessage</h2>
+	</header>
+	<div id="messages-wrapper" class="messages-wrapper"></div>
+	<header>
+		<input type="text" id="name" class="form-control"
+			placeholder="Your name here...">
+		<button id="send" class="btn btn-default" type="submit">Send</button>
+	</header>
+</body>
+</html>
